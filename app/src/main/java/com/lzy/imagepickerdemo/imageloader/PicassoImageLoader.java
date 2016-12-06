@@ -1,4 +1,4 @@
-package com.lzy.imagepickerdemo;
+package com.lzy.imagepickerdemo.imageloader;
 
 /**
  * ================================================
@@ -17,7 +17,7 @@ import com.lzy.imagepicker.loader.ImageLoader;
 public class PicassoImageLoader implements ImageLoader {
 
     @Override
-    public void displayImage(Activity activity, String path, ImageView imageView, int width, int height) {
+    public void displayImage(Activity activity, String path, ImageView imageView, int width, int height,int level) {
 //        Picasso.with(activity)
 //                .load(new File(path))
 //                .placeholder(R.mipmap.default_image)

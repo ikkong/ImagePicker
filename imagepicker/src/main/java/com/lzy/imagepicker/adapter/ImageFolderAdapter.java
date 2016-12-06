@@ -19,9 +19,9 @@ import java.util.List;
 
 /**
  * ================================================
- * 作    者：廖子尧
+ * 作    者：jeasonlzy（廖子尧 Github地址：https://github.com/jeasonlzy0216
  * 版    本：1.0
- * 创建日期：2016/1/4
+ * 创建日期：2016/5/19
  * 描    述：
  * 修订历史：
  * ================================================
@@ -85,7 +85,7 @@ public class ImageFolderAdapter extends BaseAdapter {
         ImageFolder folder = getItem(position);
         holder.folderName.setText(folder.name);
         holder.imageCount.setText(mActivity.getString(R.string.folder_image_count, folder.images.size()));
-        imagePicker.getImageLoader().displayImage(mActivity, folder.cover.path, holder.cover, mImageSize, mImageSize);
+        imagePicker.getImageLoader().displayImage(mActivity, folder.cover.path, holder.cover, mImageSize, mImageSize,1);
 
         if (lastSelected == position) {
             holder.folderCheck.setVisibility(View.VISIBLE);

@@ -25,10 +25,23 @@ import com.lzy.imagepicker.bean.ImageItem;
 import com.lzy.imagepicker.loader.GlideImageLoader;
 import com.lzy.imagepicker.ui.ImageGridActivity;
 import com.lzy.imagepicker.view.CropImageView;
+import com.lzy.imagepickerdemo.imageloader.PicassoImageLoader;
+import com.lzy.imagepickerdemo.imageloader.UILImageLoader;
+import com.lzy.imagepickerdemo.imageloader.XUtils3ImageLoader;
+import com.lzy.imagepickerdemo.wxdemo.WxDemoActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * ================================================
+ * 作    者：jeasonlzy（廖子尧 Github地址：https://github.com/jeasonlzy0216
+ * 版    本：1.0
+ * 创建日期：2016/5/19
+ * 描    述：
+ * 修订历史：
+ * ================================================
+ */
 public class ImagePickerActivity extends AppCompatActivity implements SeekBar.OnSeekBarChangeListener, CompoundButton.OnCheckedChangeListener, View.OnClickListener {
 
     private ImagePicker imagePicker;
@@ -50,8 +63,6 @@ public class ImagePickerActivity extends AppCompatActivity implements SeekBar.On
     private EditText et_crop_radius;
     private EditText et_outputx;
     private EditText et_outputy;
-    
-    private Button btn_wxDemo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,53 +115,49 @@ public class ImagePickerActivity extends AppCompatActivity implements SeekBar.On
 
         Button btn_open_gallery = (Button) findViewById(R.id.btn_open_gallery);
         btn_open_gallery.setOnClickListener(this);
+        Button btn_wxDemo = (Button) findViewById(R.id.btn_wxDemo);
+        btn_wxDemo.setOnClickListener(this);
 
         gridView = (GridView) findViewById(R.id.gridview);
-
-        btn_wxDemo = (Button) findViewById(R.id.btn_wxDemo);
-        btn_wxDemo.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
+        if (rb_uil.isChecked()) imagePicker.setImageLoader(new UILImageLoader());
+        else if (rb_glide.isChecked()) imagePicker.setImageLoader(new GlideImageLoader());
+        else if (rb_picasso.isChecked()) imagePicker.setImageLoader(new PicassoImageLoader());
+        else if (rb_fresco.isChecked()) imagePicker.setImageLoader(new GlideImageLoader());
+        else if (rb_xutils3.isChecked()) imagePicker.setImageLoader(new XUtils3ImageLoader());
+        else if (rb_xutils.isChecked()) imagePicker.setImageLoader(new GlideImageLoader());
+
+        if (rb_single_select.isChecked()) imagePicker.setMultiMode(false);
+        else if (rb_muti_select.isChecked()) imagePicker.setMultiMode(true);
+
+        if (rb_crop_square.isChecked()) {
+            imagePicker.setStyle(CropImageView.Style.RECTANGLE);
+            Integer width = Integer.valueOf(et_crop_width.getText().toString());
+            Integer height = Integer.valueOf(et_crop_height.getText().toString());
+            width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, width, getResources().getDisplayMetrics());
+            height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, height, getResources().getDisplayMetrics());
+            imagePicker.setFocusWidth(width);
+            imagePicker.setFocusHeight(height);
+        } else if (rb_crop_circle.isChecked()) {
+            imagePicker.setStyle(CropImageView.Style.CIRCLE);
+            Integer radius = Integer.valueOf(et_crop_radius.getText().toString());
+            radius = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, radius, getResources().getDisplayMetrics());
+            imagePicker.setFocusWidth(radius * 2);
+            imagePicker.setFocusHeight(radius * 2);
+        }
+
+        imagePicker.setOutPutX(Integer.valueOf(et_outputx.getText().toString()));
+        imagePicker.setOutPutY(Integer.valueOf(et_outputy.getText().toString()));
         switch (v.getId()) {
             case R.id.btn_open_gallery:
-                if (rb_uil.isChecked()) imagePicker.setImageLoader(new UILImageLoader());
-                else if (rb_glide.isChecked()) imagePicker.setImageLoader(new GlideImageLoader());
-                else if (rb_picasso.isChecked())
-                    imagePicker.setImageLoader(new PicassoImageLoader());
-                else if (rb_fresco.isChecked()) imagePicker.setImageLoader(new GlideImageLoader());
-                else if (rb_xutils3.isChecked())
-                    imagePicker.setImageLoader(new XUtils3ImageLoader());
-                else if (rb_xutils.isChecked()) imagePicker.setImageLoader(new GlideImageLoader());
-
-                if (rb_single_select.isChecked()) imagePicker.setMultiMode(false);
-                else if (rb_muti_select.isChecked()) imagePicker.setMultiMode(true);
-
-                if (rb_crop_square.isChecked()) {
-                    imagePicker.setStyle(CropImageView.Style.RECTANGLE);
-                    Integer width = Integer.valueOf(et_crop_width.getText().toString());
-                    Integer height = Integer.valueOf(et_crop_height.getText().toString());
-                    width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, width, getResources().getDisplayMetrics());
-                    height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, height, getResources().getDisplayMetrics());
-                    imagePicker.setFocusWidth(width);
-                    imagePicker.setFocusHeight(height);
-                } else if (rb_crop_circle.isChecked()) {
-                    imagePicker.setStyle(CropImageView.Style.CIRCLE);
-                    Integer radius = Integer.valueOf(et_crop_radius.getText().toString());
-                    radius = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, radius, getResources().getDisplayMetrics());
-                    imagePicker.setFocusWidth(radius * 2);
-                    imagePicker.setFocusHeight(radius * 2);
-                }
-
-                imagePicker.setOutPutX(Integer.valueOf(et_outputx.getText().toString()));
-                imagePicker.setOutPutY(Integer.valueOf(et_outputy.getText().toString()));
-
                 Intent intent = new Intent(this, ImageGridActivity.class);
                 startActivityForResult(intent, 100);
                 break;
             case R.id.btn_wxDemo:
-                startActivity(new Intent(this,WxDemoActivity.class));
+                startActivity(new Intent(this, WxDemoActivity.class));
                 break;
         }
     }
@@ -178,12 +185,10 @@ public class ImagePickerActivity extends AppCompatActivity implements SeekBar.On
 
     @Override
     public void onStartTrackingTouch(SeekBar seekBar) {
-
     }
 
     @Override
     public void onStopTrackingTouch(SeekBar seekBar) {
-
     }
 
     @Override
@@ -240,7 +245,7 @@ public class ImagePickerActivity extends AppCompatActivity implements SeekBar.On
             } else {
                 imageView = (ImageView) convertView;
             }
-            imagePicker.getImageLoader().displayImage(ImagePickerActivity.this, getItem(position).path, imageView, size, size);
+            imagePicker.getImageLoader().displayImage(ImagePickerActivity.this, getItem(position).path, imageView, size, size,1);
             return imageView;
         }
     }

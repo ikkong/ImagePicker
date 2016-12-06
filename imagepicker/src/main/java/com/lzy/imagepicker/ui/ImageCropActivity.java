@@ -8,16 +8,25 @@ import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.R;
+import com.lzy.imagepicker.Utils;
 import com.lzy.imagepicker.bean.ImageItem;
 import com.lzy.imagepicker.view.CropImageView;
 
 import java.io.File;
 import java.util.ArrayList;
 
+/**
+ * ================================================
+ * 作    者：jeasonlzy（廖子尧 Github地址：https://github.com/jeasonlzy0216
+ * 版    本：1.0
+ * 创建日期：2016/5/19
+ * 描    述：
+ * 修订历史：
+ * ================================================
+ */
 public class ImageCropActivity extends ImageBaseActivity implements View.OnClickListener, CropImageView.OnBitmapSaveCompleteListener {
 
     private CropImageView mCropImageView;
@@ -40,6 +49,7 @@ public class ImageCropActivity extends ImageBaseActivity implements View.OnClick
         Button btn_ok = (Button) findViewById(R.id.btn_ok);
         btn_ok.setText(getString(R.string.complete));
         btn_ok.setOnClickListener(this);
+        btn_ok.setVisibility(View.VISIBLE);
         TextView tv_des = (TextView) findViewById(R.id.tv_des);
         tv_des.setText(getString(R.string.photo_crop));
         mCropImageView = (CropImageView) findViewById(R.id.cv_crop_image);
@@ -64,7 +74,8 @@ public class ImageCropActivity extends ImageBaseActivity implements View.OnClick
         options.inSampleSize = calculateInSampleSize(options, displayMetrics.widthPixels, displayMetrics.heightPixels);
         options.inJustDecodeBounds = false;
         mBitmap = BitmapFactory.decodeFile(imagePath, options);
-        mCropImageView.setImageBitmap(mBitmap);
+        //设置默认旋转角度
+        mCropImageView.setImageBitmap(mCropImageView.rotate(mBitmap, Utils.getBitmapDegree(imagePath)));
 
 //        mCropImageView.setImageURI(Uri.fromFile(new File(imagePath)));
     }
