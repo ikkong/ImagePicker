@@ -67,7 +67,7 @@ public class ImagePickerAdapter extends RecyclerView.Adapter<SelectedPicViewHold
     public void onBindViewHolder(SelectedPicViewHolder holder, int position) {
         if(!list.get(position).path.equals(Constants.IMAGEITEM_DEFAULT_ADD)) {
             ImagePicker.getInstance().getImageLoader().displayImage((Activity) mContext,
-                    list.get(position).path, holder.iv_img, 0, 0);
+                    list.get(position).path, holder.iv_img, 0, 0,1);
             //将数据保存在itemView的Tag中，以便点击时进行获取
             holder.itemView.setTag(position+"");
         }else{

@@ -3,28 +3,20 @@
 
 该项目参考了：
 
-* [https://github.com/pengjianbo/GalleryFinal](https://github.com/pengjianbo/GalleryFinal) 
-* [https://github.com/easonline/AndroidImagePicker](https://github.com/easonline/AndroidImagePicker)
+* [https://github.com/jeasonlzy/ImagePicker](https://github.com/jeasonlzy/ImagePicker) 
 
 喜欢原作的可以去使用。同时欢迎大家下载体验本项目，如果使用过程中遇到什么问题，欢迎反馈。
 
-### 联系方式
- * 邮箱地址： liaojeason@126.com
- * QQ群： 489873144 （建议使用QQ群，邮箱使用较少，可能看的不及时）
- * 本群刚建立，旨在为使用我的github项目的人提供方便，如果遇到问题欢迎在群里提问。个人能力也有限，希望一起学习一起进步。
-
-
 ## 演示
- ![image](http://7xss53.com2.z0.glb.clouddn.com/imagepicker/demo1.png)![image](http://7xss53.com2.z0.glb.clouddn.com/imagepicker/demo2.gif)
- ![image](http://7xss53.com2.z0.glb.clouddn.com/imagepicker/demo3.gif)![image](http://7xss53.com1.z0.glb.clouddn.com/imagepicker/demo5.gif)
-
+ ![image](https://github.com/jeasonlzy/Screenshots/blob/master/ImagePicker/demo1.png)![image](https://github.com/jeasonlzy/Screenshots/blob/master/ImagePicker/demo2.gif)
+ ![image](https://github.com/jeasonlzy/Screenshots/blob/master/ImagePicker/demo3.gif)![image](https://github.com/jeasonlzy/Screenshots/blob/master/ImagePicker/demo5.gif)
 ## 1.用法
 
 使用前，对于Android Studio的用户，可以选择添加:
 ```java
-	compile 'com.lzy.widget:imagepicker:0.2.1'  //指定版本
+	compile 'com.ikkong:imagepicker:0.2.1'  //指定版本
 
-	compile 'com.lzy.widget:imagepicker:+'      //最新版本
+	compile 'com.ikkong:imagepicker:+'      //最新版本
 ```
 或者使用
 ```java
