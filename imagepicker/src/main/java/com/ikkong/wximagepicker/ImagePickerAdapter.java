@@ -83,7 +83,7 @@ public class ImagePickerAdapter extends RecyclerView.Adapter<ImagePickerAdapter.
 
     @Override
     public SelectedPicViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new SelectedPicViewHolder(mInflater.inflate(R.layout.list_item_image, parent, false));
+        return new SelectedPicViewHolder(mInflater.inflate(R.layout.ip_list_item_image, parent, false));
     }
 
     @Override
@@ -112,7 +112,7 @@ public class ImagePickerAdapter extends RecyclerView.Adapter<ImagePickerAdapter.
             //根据条目位置设置图片
             ImageItem item = mData.get(position);
             if (isAdded && position == getItemCount() - 1) {
-                iv_img.setImageResource(R.drawable.selector_image_add);
+                iv_img.setImageResource(R.drawable.ip_selector_image_add);
                 clickPosition = ImagePickerConstants.IMAGE_ITEM_ADD;
             } else {
                 GlideImageLoader.getInstance().displayImage((Activity) mContext, item.path, iv_img, 0, 0,1);

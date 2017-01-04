@@ -18,7 +18,7 @@
         android:scrollbarStyle="outsideOverlay"
         app:layoutManager="android.support.v7.widget.GridLayoutManager"
         app:spanCount="4"
-        tools:listitem="@layout/list_item_image"/>
+        tools:listitem="@layout/ip_list_item_image"/>
     
     <TextView
         android:id="@+id/line"

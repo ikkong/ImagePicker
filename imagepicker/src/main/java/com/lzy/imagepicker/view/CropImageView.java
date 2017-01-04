@@ -115,12 +115,12 @@ public class CropImageView extends ImageView {
         mBorderWidth = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, mBorderWidth, getResources().getDisplayMetrics());
 
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.CropImageView);
-        mMaskColor = a.getColor(R.styleable.CropImageView_cropMaskColor, mMaskColor);
-        mBorderColor = a.getColor(R.styleable.CropImageView_cropBorderColor, mBorderColor);
-        mBorderWidth = a.getDimensionPixelSize(R.styleable.CropImageView_cropBorderWidth, mBorderWidth);
-        mFocusWidth = a.getDimensionPixelSize(R.styleable.CropImageView_cropFocusWidth, mFocusWidth);
-        mFocusHeight = a.getDimensionPixelSize(R.styleable.CropImageView_cropFocusHeight, mFocusHeight);
-        mDefaultStyleIndex = a.getInteger(R.styleable.CropImageView_cropStyle, mDefaultStyleIndex);
+        mMaskColor = a.getColor(R.styleable.CropImageView_ipCropMaskColor, mMaskColor);
+        mBorderColor = a.getColor(R.styleable.CropImageView_ipCropBorderColor, mBorderColor);
+        mBorderWidth = a.getDimensionPixelSize(R.styleable.CropImageView_ipCropBorderWidth, mBorderWidth);
+        mFocusWidth = a.getDimensionPixelSize(R.styleable.CropImageView_ipCropFocusWidth, mFocusWidth);
+        mFocusHeight = a.getDimensionPixelSize(R.styleable.CropImageView_ipCropFocusHeight, mFocusHeight);
+        mDefaultStyleIndex = a.getInteger(R.styleable.CropImageView_ipCropStyle, mDefaultStyleIndex);
         mStyle = styles[mDefaultStyleIndex];
         a.recycle();
 

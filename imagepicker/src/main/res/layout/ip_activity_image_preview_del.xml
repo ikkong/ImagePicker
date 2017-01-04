@@ -20,9 +20,9 @@
             android:layout_width="48dp"
             android:layout_height="match_parent"
             android:layout_centerVertical="true"
-            android:background="@drawable/selector_back_press"
+            android:background="@drawable/ip_selector_back_press"
             android:padding="14dp"
-            android:src="@mipmap/ic_back"/>
+            android:src="@mipmap/ip_ic_back"/>
 
         <View
             android:layout_width="1px"
@@ -49,9 +49,9 @@
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:background="@drawable/selector_back_press"
+            android:background="@drawable/ip_selector_back_press"
             android:padding="14dp"
-            android:src="@mipmap/ic_del"/>
+            android:src="@mipmap/ip_ic_del"/>
     </RelativeLayout>
 
 </FrameLayout>

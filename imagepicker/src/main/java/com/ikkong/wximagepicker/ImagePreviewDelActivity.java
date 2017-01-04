@@ -35,7 +35,7 @@ public class ImagePreviewDelActivity extends ImageBaseActivity implements View.O
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_image_preview_del);
+        setContentView(R.layout.ip_activity_image_preview_del);
 
         mCurrentPosition = getIntent().getIntExtra(ImagePicker.EXTRA_SELECTED_IMAGE_POSITION, 0);
         selectedImages = (ArrayList<ImageItem>) getIntent().getSerializableExtra(ImagePicker.EXTRA_IMAGE_ITEMS);
@@ -61,14 +61,14 @@ public class ImagePreviewDelActivity extends ImageBaseActivity implements View.O
         viewPager.setCurrentItem(mCurrentPosition, false);
 
         ImageItem item = selectedImages.get(mCurrentPosition);
-        mTitleCount.setText(getString(com.lzy.imagepicker.R.string.preview_image_count, mCurrentPosition + 1, selectedImages.size()));
+        mTitleCount.setText(getString(com.lzy.imagepicker.R.string.ip_preview_image_count, mCurrentPosition + 1, selectedImages.size()));
         //滑动ViewPager的时候，根据外界的数据改变当前的图片的位置描述文本
         viewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
                 mCurrentPosition = position;
 //                ImageItem item = selectedImages.get(mCurrentPosition);
-                mTitleCount.setText(getString(com.lzy.imagepicker.R.string.preview_image_count, mCurrentPosition + 1, selectedImages.size()));
+                mTitleCount.setText(getString(com.lzy.imagepicker.R.string.ip_preview_image_count, mCurrentPosition + 1, selectedImages.size()));
             }
         });
         
@@ -96,7 +96,7 @@ public class ImagePreviewDelActivity extends ImageBaseActivity implements View.O
                             if(selectedImages.size() > 0){
                                 adapter.notifyDataSetChanged();
                                 //刷新显示当前位置
-                                mTitleCount.setText(getString(com.lzy.imagepicker.R.string.preview_image_count, mCurrentPosition + 1, selectedImages.size()));
+                                mTitleCount.setText(getString(com.lzy.imagepicker.R.string.ip_preview_image_count, mCurrentPosition + 1, selectedImages.size()));
                             }
                             if(selectedImages.size() == 0){
                                 onBackPressed();
@@ -122,16 +122,16 @@ public class ImagePreviewDelActivity extends ImageBaseActivity implements View.O
     /** 单击时，隐藏头部 */
     public void onImageSingleTap() {
         if (topBar.getVisibility() == View.VISIBLE) {
-            topBar.setAnimation(AnimationUtils.loadAnimation(this, com.lzy.imagepicker.R.anim.top_out));
+            topBar.setAnimation(AnimationUtils.loadAnimation(this, com.lzy.imagepicker.R.anim.ip_top_out));
             topBar.setVisibility(View.GONE);
-            tintManager.setStatusBarTintResource(com.lzy.imagepicker.R.color.transparent);//通知栏所需颜色
+            tintManager.setStatusBarTintResource(com.lzy.imagepicker.R.color.ip_transparent);//通知栏所需颜色
             //给最外层布局加上这个属性表示，Activity全屏显示，且状态栏被隐藏覆盖掉。
             if (Build.VERSION.SDK_INT >= 16)
                 frameLay.setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
         } else {
-            topBar.setAnimation(AnimationUtils.loadAnimation(this, com.lzy.imagepicker.R.anim.top_in));
+            topBar.setAnimation(AnimationUtils.loadAnimation(this, com.lzy.imagepicker.R.anim.ip_top_in));
             topBar.setVisibility(View.VISIBLE);
-            tintManager.setStatusBarTintResource(com.lzy.imagepicker.R.color.status_bar);//通知栏所需颜色
+            tintManager.setStatusBarTintResource(com.lzy.imagepicker.R.color.ip_status_bar);//通知栏所需颜色
             //Activity全屏显示，但状态栏不会被隐藏覆盖，状态栏依然可见，Activity顶端布局部分会被状态遮住
             if (Build.VERSION.SDK_INT >= 16)
                 frameLay.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);

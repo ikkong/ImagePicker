@@ -20,8 +20,8 @@ public class PicassoImageLoader implements ImageLoader {
     public void displayImage(Activity activity, String path, ImageView imageView, int width, int height,int level) {
 //        Picasso.with(activity)
 //                .load(new File(path))
-//                .placeholder(R.mipmap.default_image)
-//                .error(R.mipmap.default_image)
+//                .placeholder(R.mipmap.ip_default_image)
+//                .error(R.mipmap.ip_default_image)
 //                .resize(width, height)
 //                .centerInside()
 //                .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE)
