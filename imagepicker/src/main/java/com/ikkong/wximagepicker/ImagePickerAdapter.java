@@ -8,115 +8,121 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.R;
 import com.lzy.imagepicker.bean.ImageItem;
+import com.lzy.imagepicker.loader.GlideImageLoader;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
- * Author:  ikkong
- * Email:   ikkong@163.com
- * Date:    2016/5/19
- * Description:
+ * ================================================
+ * 作    者：ikkong （ikkong@163.com），修改 jeasonlzy（廖子尧）
+ * 版    本：1.0
+ * 创建日期：2016/5/19
+ * 描    述：
+ * 修订历史：微信图片选择的Adapter, 感谢 ikkong 的提交
+ * ================================================
  */
-public class ImagePickerAdapter extends RecyclerView.Adapter<SelectedPicViewHolder> implements
-        View.OnClickListener {
+public class ImagePickerAdapter extends RecyclerView.Adapter<ImagePickerAdapter.SelectedPicViewHolder> {
     private int maxImgCount;
     private Context mContext;
-    private ArrayList<ImageItem> list;
+    private List<ImageItem> mData;
     private LayoutInflater mInflater;
     private OnRecyclerViewItemClickListener listener;
+    private boolean isAdded;   //是否额外添加了最后一个+号图片
+    private int adapterTag; //用于同一个界面多个adapter时做标记用
 
-    public void setList(ArrayList<ImageItem> list) {
-        this.list = list;
+    public int getAdapterTag() {
+        return adapterTag;
     }
 
-    public ImagePickerAdapter(Context mContext, ArrayList<ImageItem> list, int maxImgCount) {
-        this.mContext = mContext;
-        this.list = list;
-        this.maxImgCount = maxImgCount;
-        this.mInflater = LayoutInflater.from(mContext);
+    public void setAdapterTag(int adapterTag) {
+        this.adapterTag = adapterTag;
+    }
+
+    public interface OnRecyclerViewItemClickListener {
+        void onItemClick(View view, int position, int adapterTag);
     }
 
     public void setOnItemClickListener(OnRecyclerViewItemClickListener listener) {
         this.listener = listener;
     }
 
-    @Override
-    public void onClick(View view) {
-        if (listener != null) {
-            //注意这里使用getTag方法获取数据
-            listener.onItemClick(view,(String)view.getTag());
+    public void setImages(List<ImageItem> data) {
+        mData = new ArrayList<>(data);
+        if (getItemCount() < maxImgCount) {
+            mData.add(new ImageItem());
+            isAdded = true;
+        } else {
+            isAdded = false;
         }
+        notifyDataSetChanged();
     }
 
-    public static interface OnRecyclerViewItemClickListener{
-        void onItemClick(View view, String data);
+    public List<ImageItem> getImages() {
+        //由于图片未选满时，最后一张显示添加图片，因此这个方法返回真正的已选图片
+        if (isAdded) return new ArrayList<>(mData.subList(0, mData.size() - 1));
+        else return mData;
+    }
+
+    public ImagePickerAdapter(Context mContext, List<ImageItem> data, int maxImgCount) {
+        this.mContext = mContext;
+        this.maxImgCount = maxImgCount;
+        this.mInflater = LayoutInflater.from(mContext);
+        setImages(data);
+    }
+
+    public ImagePickerAdapter(Context mContext, List<ImageItem> data, int maxImgCount, int adapterTag) {
+        this.mContext = mContext;
+        this.maxImgCount = maxImgCount;
+        this.adapterTag = adapterTag;
+        this.mInflater = LayoutInflater.from(mContext);
+        setImages(data);
     }
 
     @Override
     public SelectedPicViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = mInflater.inflate(R.layout.list_item_image,parent,false);
-        SelectedPicViewHolder holder = new SelectedPicViewHolder(view);
-        view.setOnClickListener(this);
-        return holder;
+        return new SelectedPicViewHolder(mInflater.inflate(R.layout.list_item_image, parent, false));
     }
 
     @Override
     public void onBindViewHolder(SelectedPicViewHolder holder, int position) {
-        if(!list.get(position).path.equals(Constants.IMAGEITEM_DEFAULT_ADD)) {
-            ImagePicker.getInstance().getImageLoader().displayImage((Activity) mContext,
-                    list.get(position).path, holder.iv_img, 0, 0,1);
-            //将数据保存在itemView的Tag中，以便点击时进行获取
-            holder.itemView.setTag(position+"");
-        }else{
-            holder.iv_img.setImageResource(R.drawable.selector_image_add);
-            //将数据保存在itemView的Tag中，以便点击时进行获取
-            holder.itemView.setTag(Constants.IMAGEITEM_DEFAULT_ADD);
-        }
+        holder.bind(position);
     }
 
     @Override
     public int getItemCount() {
-        return list.size();
+        return mData.size();
     }
 
-    public void refresh(){
-        if(getItemCount() > maxImgCount
-                && list.get(getItemCount()-1).path.equals(Constants.IMAGEITEM_DEFAULT_ADD)){
-            //del last
-            list.remove(getItemCount()-1);
+    public class SelectedPicViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
+        private ImageView iv_img;
+        private int clickPosition;
+
+        public SelectedPicViewHolder(View itemView) {
+            super(itemView);
+            iv_img = (ImageView) itemView.findViewById(R.id.iv_img);
         }
-        if(getItemCount() < maxImgCount){
-            if(getItemCount() == 0 ||
-                    !list.get(getItemCount()-1).path.equals(Constants.IMAGEITEM_DEFAULT_ADD)){
-                ImageItem imageItem = new ImageItem();
-                imageItem.path = Constants.IMAGEITEM_DEFAULT_ADD;
-                list.add(imageItem);
+
+        public void bind(int position) {
+            //设置条目的点击事件
+            itemView.setOnClickListener(this);
+            //根据条目位置设置图片
+            ImageItem item = mData.get(position);
+            if (isAdded && position == getItemCount() - 1) {
+                iv_img.setImageResource(R.drawable.selector_image_add);
+                clickPosition = ImagePickerConstants.IMAGE_ITEM_ADD;
+            } else {
+                GlideImageLoader.getInstance().displayImage((Activity) mContext, item.path, iv_img, 0, 0,1);
+                clickPosition = position;
             }
         }
-        notifyDataSetChanged();
-    }
-    
-    public ArrayList<ImageItem> getRealSelImage(){
-        //由于图片未选满时，最后一张显示添加图片，因此这个方法返回真正的已选图片
-        if(list.get(list.size()-1).path.equals(Constants.IMAGEITEM_DEFAULT_ADD)){
-            ArrayList<ImageItem> arrayList = new ArrayList<>();
-            for(int i = 0; i<list.size()-1;i++){
-                arrayList.add(list.get(i));
-            }
-            return arrayList;
+
+        @Override
+        public void onClick(View v) {
+            if (listener != null) listener.onItemClick(v, clickPosition,adapterTag);
         }
-        return list;
-    }
-}
-
-class SelectedPicViewHolder extends RecyclerView.ViewHolder{
-    ImageView iv_img;
-
-    public SelectedPicViewHolder(View itemView) {
-        super(itemView);
-        iv_img = (ImageView) itemView.findViewById(R.id.iv_img);
     }
 }

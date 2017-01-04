@@ -10,7 +10,7 @@ import android.view.ViewGroup;
  * Author:  ikkong
  * Email:   ikkong@163.com
  * Date:    2016/8/5
- * Description:
+ * Description:高度自适应
  */
 public class WrapHeightGridLayoutManager extends GridLayoutManager {
 
@@ -55,11 +55,15 @@ public class WrapHeightGridLayoutManager extends GridLayoutManager {
     private void measureScrapChild(RecyclerView.Recycler recycler, int position, int widthSpec,
                                    int heightSpec, int[] measuredDimension) {
 
-        View view = recycler.getViewForPosition(position);
-
-        // For adding Item Decor Insets to view
-        super.measureChildWithMargins(view, 0, 0);
+        View view = null;
+        try{
+            view = recycler.getViewForPosition(position);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         if (view != null) {
+            // For adding Item Decor Insets to view
+            super.measureChildWithMargins(view, 0, 0);
             RecyclerView.LayoutParams p = (RecyclerView.LayoutParams) view.getLayoutParams();
             int childWidthSpec = ViewGroup.getChildMeasureSpec(widthSpec,
                     getPaddingLeft() + getPaddingRight() + getDecoratedLeft(view) + getDecoratedRight(view), p.width);

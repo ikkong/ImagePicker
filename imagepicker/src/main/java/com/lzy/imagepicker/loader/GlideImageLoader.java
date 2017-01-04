@@ -21,11 +21,24 @@ import java.io.File;
  * ================================================
  */
 public class GlideImageLoader implements ImageLoader {
-
+    private static GlideImageLoader mInstance;
+    private GlideImageLoader() {
+    }
+    public static GlideImageLoader getInstance() {
+        if (mInstance == null) {
+            synchronized (GlideImageLoader.class) {
+                if (mInstance == null) {
+                    mInstance = new GlideImageLoader();
+                }
+            }
+        }
+        return mInstance;
+    }
+    
     @Override
     public void displayImage(Activity activity, String path, ImageView imageView, int width, int height,int level) {
         Glide.with(activity)                             //配置上下文
-                .load(Uri.fromFile(new File(path)))//设置图片路径
+                .load((path.contains("http://")||path.contains("https://"))?path: Uri.fromFile(new File(path)))//设置图片路径
                 .error(R.mipmap.default_image)           //设置错误图片
                 .priority(level == 0 ? Priority.NORMAL: Priority.IMMEDIATE)
                 .placeholder(R.mipmap.default_image)     //设置占位图片

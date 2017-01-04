@@ -28,6 +28,7 @@ import com.lzy.imagepicker.view.CropImageView;
 import com.lzy.imagepickerdemo.imageloader.PicassoImageLoader;
 import com.lzy.imagepickerdemo.imageloader.UILImageLoader;
 import com.lzy.imagepickerdemo.imageloader.XUtils3ImageLoader;
+import com.lzy.imagepickerdemo.wxdemo.MuliSelActivity;
 import com.lzy.imagepickerdemo.wxdemo.WxDemoActivity;
 
 import java.util.ArrayList;
@@ -70,7 +71,7 @@ public class ImagePickerActivity extends AppCompatActivity implements SeekBar.On
         setContentView(R.layout.activity_image_picker);
 
         imagePicker = ImagePicker.getInstance();
-        imagePicker.setImageLoader(new GlideImageLoader());
+        imagePicker.setImageLoader(GlideImageLoader.getInstance());
 
         rb_uil = (RadioButton) findViewById(R.id.rb_uil);
         rb_glide = (RadioButton) findViewById(R.id.rb_glide);
@@ -116,7 +117,9 @@ public class ImagePickerActivity extends AppCompatActivity implements SeekBar.On
         Button btn_open_gallery = (Button) findViewById(R.id.btn_open_gallery);
         btn_open_gallery.setOnClickListener(this);
         Button btn_wxDemo = (Button) findViewById(R.id.btn_wxDemo);
+        Button btn_mulisel = (Button) findViewById(R.id.btn_mulisel);
         btn_wxDemo.setOnClickListener(this);
+        btn_mulisel.setOnClickListener(this);
 
         gridView = (GridView) findViewById(R.id.gridview);
     }
@@ -124,11 +127,11 @@ public class ImagePickerActivity extends AppCompatActivity implements SeekBar.On
     @Override
     public void onClick(View v) {
         if (rb_uil.isChecked()) imagePicker.setImageLoader(new UILImageLoader());
-        else if (rb_glide.isChecked()) imagePicker.setImageLoader(new GlideImageLoader());
+        else if (rb_glide.isChecked()) imagePicker.setImageLoader(GlideImageLoader.getInstance());
         else if (rb_picasso.isChecked()) imagePicker.setImageLoader(new PicassoImageLoader());
-        else if (rb_fresco.isChecked()) imagePicker.setImageLoader(new GlideImageLoader());
+        else if (rb_fresco.isChecked()) imagePicker.setImageLoader(GlideImageLoader.getInstance());
         else if (rb_xutils3.isChecked()) imagePicker.setImageLoader(new XUtils3ImageLoader());
-        else if (rb_xutils.isChecked()) imagePicker.setImageLoader(new GlideImageLoader());
+        else if (rb_xutils.isChecked()) imagePicker.setImageLoader(GlideImageLoader.getInstance());
 
         if (rb_single_select.isChecked()) imagePicker.setMultiMode(false);
         else if (rb_muti_select.isChecked()) imagePicker.setMultiMode(true);
@@ -158,6 +161,9 @@ public class ImagePickerActivity extends AppCompatActivity implements SeekBar.On
                 break;
             case R.id.btn_wxDemo:
                 startActivity(new Intent(this, WxDemoActivity.class));
+                break;
+            case R.id.btn_mulisel:
+                startActivity(new Intent(this, MuliSelActivity.class));
                 break;
         }
     }

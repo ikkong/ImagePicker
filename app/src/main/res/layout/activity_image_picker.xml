@@ -281,5 +281,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="完全仿微信Demo"/>
+        <Button
+            android:id="@+id/btn_mulisel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="同界面多组Demo"/>
     </LinearLayout>
 </ScrollView>
