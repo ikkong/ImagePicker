@@ -18,9 +18,6 @@
         <activity android:name=".wxdemo.WxDemoActivity"/>
         <activity android:name=".wxdemo.MuliSelActivity"/>
 
-        <activity
-            android:name="com.lzy.imagepicker.ui.ImagePreviewDelActivity"
-            android:theme="@style/ImagePickerThemeFullScreen"/>
     </application>
 
 </manifest>
