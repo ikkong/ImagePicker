@@ -286,5 +286,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="同界面多组Demo"/>
+        <Button
+            android:id="@+id/btn_readonly"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="只读Demo"/>
     </LinearLayout>
 </ScrollView>

@@ -1,5 +1,6 @@
 # ImagePicker
 ###Android自定义相册，完全仿微信UI，实现了拍照、图片选择（单选/多选）、 裁剪 、旋转、等功能。
+###0.2.8 更新：可设置只读模式，支持图片预览和下载，详见demo
 
 该项目Fork自：
 
@@ -14,7 +15,7 @@
 
 使用前，对于Android Studio的用户，可以选择添加:
 ```java
-	compile 'com.ikkong:imagepicker:0.2.3'  //指定版本
+	compile 'com.ikkong:imagepicker:0.2.8'  //指定版本
 
 	compile 'com.ikkong:imagepicker:+'      //最新版本
 ```

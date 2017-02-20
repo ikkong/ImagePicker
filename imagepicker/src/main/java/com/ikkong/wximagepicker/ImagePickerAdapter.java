@@ -22,6 +22,7 @@ import java.util.List;
  * 创建日期：2016/5/19
  * 描    述：
  * 修订历史：微信图片选择的Adapter, 感谢 ikkong 的提交
+ * 2017-2-20 增加是否只读设置，只读不显示添加图片，点击跳转预览界面
  * ================================================
  */
 public class ImagePickerAdapter extends RecyclerView.Adapter<ImagePickerAdapter.SelectedPicViewHolder> {
@@ -32,6 +33,7 @@ public class ImagePickerAdapter extends RecyclerView.Adapter<ImagePickerAdapter.
     private OnRecyclerViewItemClickListener listener;
     private boolean isAdded;   //是否额外添加了最后一个+号图片
     private int adapterTag; //用于同一个界面多个adapter时做标记用
+    private boolean readOnly; //只读
 
     public int getAdapterTag() {
         return adapterTag;
@@ -51,11 +53,13 @@ public class ImagePickerAdapter extends RecyclerView.Adapter<ImagePickerAdapter.
 
     public void setImages(List<ImageItem> data) {
         mData = new ArrayList<>(data);
-        if (getItemCount() < maxImgCount) {
-            mData.add(new ImageItem());
-            isAdded = true;
-        } else {
-            isAdded = false;
+        if (!readOnly) {
+            if (getItemCount() < maxImgCount) {
+                mData.add(new ImageItem());
+                isAdded = true;
+            } else {
+                isAdded = false;
+            }
         }
         notifyDataSetChanged();
     }
@@ -78,6 +82,15 @@ public class ImagePickerAdapter extends RecyclerView.Adapter<ImagePickerAdapter.
         this.maxImgCount = maxImgCount;
         this.adapterTag = adapterTag;
         this.mInflater = LayoutInflater.from(mContext);
+        setImages(data);
+    }
+
+    public ImagePickerAdapter(Context mContext, List<ImageItem> data, int maxImgCount, int adapterTag, boolean readOnly) {
+        this.mContext = mContext;
+        this.maxImgCount = maxImgCount;
+        this.adapterTag = adapterTag;
+        this.mInflater = LayoutInflater.from(mContext);
+        this.readOnly = readOnly;
         setImages(data);
     }
 

@@ -29,6 +29,7 @@ import com.lzy.imagepickerdemo.imageloader.PicassoImageLoader;
 import com.lzy.imagepickerdemo.imageloader.UILImageLoader;
 import com.lzy.imagepickerdemo.imageloader.XUtils3ImageLoader;
 import com.lzy.imagepickerdemo.wxdemo.MuliSelActivity;
+import com.lzy.imagepickerdemo.wxdemo.ReadOnlyActivity;
 import com.lzy.imagepickerdemo.wxdemo.WxDemoActivity;
 
 import java.util.ArrayList;
@@ -118,8 +119,10 @@ public class ImagePickerActivity extends AppCompatActivity implements SeekBar.On
         btn_open_gallery.setOnClickListener(this);
         Button btn_wxDemo = (Button) findViewById(R.id.btn_wxDemo);
         Button btn_mulisel = (Button) findViewById(R.id.btn_mulisel);
+        Button btn_readonly = (Button) findViewById(R.id.btn_readonly);
         btn_wxDemo.setOnClickListener(this);
         btn_mulisel.setOnClickListener(this);
+        btn_readonly.setOnClickListener(this);
 
         gridView = (GridView) findViewById(R.id.gridview);
     }
@@ -164,6 +167,9 @@ public class ImagePickerActivity extends AppCompatActivity implements SeekBar.On
                 break;
             case R.id.btn_mulisel:
                 startActivity(new Intent(this, MuliSelActivity.class));
+                break;
+            case R.id.btn_readonly:
+                startActivity(new Intent(this, ReadOnlyActivity.class));
                 break;
         }
     }

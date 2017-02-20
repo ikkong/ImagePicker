@@ -38,7 +38,7 @@ public class GlideImageLoader implements ImageLoader {
     @Override
     public void displayImage(Activity activity, String path, ImageView imageView, int width, int height,int level) {
         Glide.with(activity)                             //配置上下文
-                .load((path.contains("http://")||path.contains("https://"))?path: Uri.fromFile(new File(path)))//设置图片路径
+                .load((path.startsWith("http://")||path.startsWith("https://"))?path: Uri.fromFile(new File(path)))//设置图片路径
                 .error(R.mipmap.ip_default_image)           //设置错误图片
                 .priority(level == 0 ? Priority.NORMAL: Priority.IMMEDIATE)
                 .placeholder(R.mipmap.ip_default_image)     //设置占位图片
