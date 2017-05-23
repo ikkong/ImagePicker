@@ -43,6 +43,14 @@ public class ImagePickerAdapter extends RecyclerView.Adapter<ImagePickerAdapter.
         this.adapterTag = adapterTag;
     }
 
+    public boolean isReadOnly() {
+        return readOnly;
+    }
+
+    public void setReadOnly(boolean readOnly) {
+        this.readOnly = readOnly;
+    }
+
     public interface OnRecyclerViewItemClickListener {
         void onItemClick(View view, int position, int adapterTag);
     }
