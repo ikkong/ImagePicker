@@ -68,6 +68,8 @@ public class ImagePickerAdapter extends RecyclerView.Adapter<ImagePickerAdapter.
             } else {
                 isAdded = false;
             }
+        }else {
+            isAdded = false;
         }
         notifyDataSetChanged();
     }
