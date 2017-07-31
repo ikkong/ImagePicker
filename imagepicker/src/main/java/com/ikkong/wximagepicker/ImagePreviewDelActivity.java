@@ -23,6 +23,7 @@ import java.util.ArrayList;
 /**
  * 预览已经选择的图片，并可以删除
  */
+@Deprecated
 public class ImagePreviewDelActivity extends ImageBaseActivity implements View.OnClickListener{
 
     private int mCurrentPosition = 0;         //跳转进来时的序号，第几个图片
