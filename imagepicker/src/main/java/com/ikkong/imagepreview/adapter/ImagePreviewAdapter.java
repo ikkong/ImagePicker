@@ -1,4 +1,4 @@
-package com.lzy.imagepicker.adapter;
+package com.ikkong.imagepreview.adapter;
 
 import android.app.Activity;
 import android.support.v4.view.PagerAdapter;
@@ -7,75 +7,58 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.ikkong.imagepreview.listener.ShareListener;
-import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.Utils;
-import com.lzy.imagepicker.bean.ImageItem;
-
-import java.util.ArrayList;
+import com.lzy.imagepicker.loader.GlideImageLoader;
 
 import uk.co.senab.photoview.PhotoView;
 import uk.co.senab.photoview.PhotoViewAttacher;
 
 /**
- * ================================================
- * 作    者：jeasonlzy（廖子尧 Github地址：https://github.com/jeasonlzy0216
- * 版    本：1.0
- * 创建日期：2016/5/19
- * 描    述：
- * 修订历史：
- * ================================================
+ * 保留图片预览，去除其他代码
  */
-public class ImagePageAdapter extends PagerAdapter {
+public class ImagePreviewAdapter extends PagerAdapter {
 
     private int screenWidth;
     private int screenHeight;
-    private ImagePicker imagePicker;
-    private ArrayList<ImageItem> images = new ArrayList<>();
+    private String[] imgUrls;
     private Activity mActivity;
     public PhotoViewClickListener listener;
-    public View.OnLongClickListener longClickListener;
 
-    public ImagePageAdapter(Activity activity, ArrayList<ImageItem> images) {
+    public ImagePreviewAdapter(Activity activity, String[] imgUrls) {
         this.mActivity = activity;
-        this.images = images;
+        this.imgUrls = imgUrls;
 
         DisplayMetrics dm = Utils.getScreenPix(activity);
         screenWidth = dm.widthPixels;
         screenHeight = dm.heightPixels;
-        imagePicker = ImagePicker.getInstance();
     }
 
-    public void setData(ArrayList<ImageItem> images) {
-        this.images = images;
+    public void setData(String[] imgUrls) {
+        this.imgUrls = imgUrls;
     }
 
     public void setPhotoViewClickListener(PhotoViewClickListener listener) {
         this.listener = listener;
     }
 
-    public void setLongClickListener(View.OnLongClickListener longClickListener) {
-        this.longClickListener = longClickListener;
-    }
-
     @Override
-    public Object instantiateItem(ViewGroup container, int position) {
+    public Object instantiateItem(ViewGroup container, final int position) {
         PhotoView photoView = new PhotoView(mActivity);
-        final ImageItem imageItem = images.get(position);
-        imagePicker.getImageLoader().displayImage(mActivity, imageItem.path, photoView, screenWidth, screenHeight,1);
+        GlideImageLoader.getInstance().displayImage(mActivity, imgUrls[position], photoView, screenWidth, screenHeight,1);
         photoView.setOnPhotoTapListener(new PhotoViewAttacher.OnPhotoTapListener() {
             @Override
             public void onPhotoTap(View view, float x, float y) {
                 if (listener != null) listener.OnPhotoTapListener(view, x, y);
             }
         });
-        photoView.setOnLongClickListener(new ShareListener(imageItem.path,mActivity));
+        photoView.setOnLongClickListener(new ShareListener(imgUrls[position],mActivity));
         container.addView(photoView);
         return photoView;
     }
 
     @Override
     public int getCount() {
-        return images.size();
+        return imgUrls.length;
     }
 
     @Override
@@ -87,7 +70,6 @@ public class ImagePageAdapter extends PagerAdapter {
     public void destroyItem(ViewGroup container, int position, Object object) {
         container.removeView((View) object);
     }
-
     @Override
     public int getItemPosition(Object object) {
         return POSITION_NONE;
