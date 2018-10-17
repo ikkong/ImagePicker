@@ -6,6 +6,8 @@ import android.content.ComponentName;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
+import android.support.v4.content.FileProvider;
 import android.view.View;
 import android.widget.Toast;
 
@@ -97,32 +99,55 @@ public class ShareListener implements View.OnLongClickListener {
      * @param path  本地路径的图片
      */
     private void shareWeChat(String path){
-        Uri uriToImage = Uri.fromFile(new File(path));
         Intent shareIntent = new Intent();
-        //发送图片给好友。
+        File file = new File(path);
+        Uri uriToImage;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            uriToImage = FileProvider.getUriForFile(context,
+                    context.getApplicationContext().getPackageName() + ".fileProvider",
+                    new File(path));
+            shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        } else {
+            uriToImage = Uri.fromFile(file);
+        }
+        shareIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         ComponentName comp = new ComponentName("com.tencent.mm", "com.tencent.mm.ui.tools.ShareImgUI");
         shareIntent.setComponent(comp);
         shareIntent.setAction(Intent.ACTION_SEND);
         shareIntent.putExtra(Intent.EXTRA_STREAM, uriToImage);
         shareIntent.setType("image/jpeg");
-        context.startActivity(Intent.createChooser(shareIntent, "分享图片"));
+        try {
+            context.startActivity(Intent.createChooser(shareIntent, "分享图片"));
+        } catch (Exception e) {
+            
+        }
     }
 
     public void shareQQ(String path){
-        Uri uriToImage = Uri.fromFile(new File(path));
-        Intent sendIntent = new Intent();
-        sendIntent.setAction(Intent.ACTION_SEND);
-        sendIntent.putExtra(Intent.EXTRA_STREAM, uriToImage);
-        sendIntent.setType("image/jpeg");
+        Intent shareIntent = new Intent();
+        File file = new File(path);
+        Uri uriToImage;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            uriToImage = FileProvider.getUriForFile(context,
+                    context.getApplicationContext().getPackageName() + ".fileProvider",
+                    new File(path));
+            shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        } else {
+            uriToImage = Uri.fromFile(file);
+        }
+        shareIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        shareIntent.setAction(Intent.ACTION_SEND);
+        shareIntent.putExtra(Intent.EXTRA_STREAM, uriToImage);
+        shareIntent.setType("image/jpeg");
         try {
-            sendIntent.setClassName("com.tencent.mobileqq", "com.tencent.mobileqq.activity.JumpActivity");
-            Intent chooserIntent = Intent.createChooser(sendIntent, "选择分享途径");
+            shareIntent.setClassName("com.tencent.mobileqq", "com.tencent.mobileqq.activity.JumpActivity");
+            Intent chooserIntent = Intent.createChooser(shareIntent, "选择分享途径");
             if (chooserIntent == null) {
                 return;
             }
             context.startActivity(chooserIntent);
         } catch (Exception e) {
-            context.startActivity(sendIntent);
+            context.startActivity(shareIntent);
         }
     }
 }

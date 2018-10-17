@@ -19,7 +19,15 @@
         <activity android:name=".wxdemo.WxDemoActivity"/>
         <activity android:name=".wxdemo.MuliSelActivity"/>
         <activity android:name=".wxdemo.ReadOnlyActivity"/>
-
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.lzy.imagepickerdemo.fileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths"/>
+        </provider>
     </application>
 
 </manifest>
