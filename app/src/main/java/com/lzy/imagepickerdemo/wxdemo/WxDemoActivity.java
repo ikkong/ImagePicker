@@ -50,7 +50,7 @@ public class WxDemoActivity extends AppCompatActivity implements ImagePickerAdap
         adapter = new ImagePickerAdapter(this, selImageList, maxImgCount);
         adapter.setOnItemClickListener(this);
 
-        recyclerView.setLayoutManager(new WrapHeightGridLayoutManager(this, 4));
+        recyclerView.setLayoutManager(new WrapHeightGridLayoutManager(this, 5));
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adapter);
     }
