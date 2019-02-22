@@ -22,6 +22,9 @@
             android:name=".ui.ImageCropActivity"
             android:theme="@style/ImagePickerTheme"/>
         <activity
+            android:name="com.ikkong.ui.FreeImageCropActivity"
+            android:theme="@style/ImagePickerTheme"/>
+        <activity
             android:name=".ui.ImagePreviewActivity"
             android:theme="@style/ImagePickerThemeFullScreen"/>
         <activity
@@ -33,6 +36,10 @@
         <activity
             android:name="com.ikkong.imagepreview.KKImagePreviewActivity"
             android:theme="@style/ImagePickerThemeFullScreen"/>
+        <activity
+            android:name="com.yalantis.ucrop.UCropActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
     </application>
 
 </manifest>

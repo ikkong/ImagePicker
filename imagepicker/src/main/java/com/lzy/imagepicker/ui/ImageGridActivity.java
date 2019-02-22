@@ -13,6 +13,7 @@ import android.widget.GridView;
 import android.widget.ListPopupWindow;
 import android.widget.PopupWindow;
 
+import com.ikkong.ui.FreeImageCropActivity;
 import com.lzy.imagepicker.ImageDataSource;
 import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.R;
@@ -86,6 +87,11 @@ public class ImageGridActivity extends ImageBaseActivity implements ImageDataSou
 
         onImageSelected(0, null, false);
         new ImageDataSource(this, null, this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 
     @Override
@@ -200,7 +206,12 @@ public class ImageGridActivity extends ImageBaseActivity implements ImageDataSou
             imagePicker.clearSelectedImages();
             imagePicker.addSelectedImageItem(position, imagePicker.getCurrentImageFolderItems().get(position), true);
             if (imagePicker.isCrop()) {
-                Intent intent = new Intent(ImageGridActivity.this, ImageCropActivity.class);
+                Intent intent;
+                if(imagePicker.isCropFree()){
+                    intent = new Intent(ImageGridActivity.this, FreeImageCropActivity.class);
+                }else {
+                    intent = new Intent(ImageGridActivity.this, ImageCropActivity.class);
+                }
                 startActivityForResult(intent, ImagePicker.REQUEST_CODE_CROP);  //单选需要裁剪，进入裁剪界面
             } else {
                 Intent intent = new Intent();
@@ -253,7 +264,12 @@ public class ImageGridActivity extends ImageBaseActivity implements ImageDataSou
                 imagePicker.clearSelectedImages();
                 imagePicker.addSelectedImageItem(0, imageItem, true);
                 if (imagePicker.isCrop()) {
-                    Intent intent = new Intent(ImageGridActivity.this, ImageCropActivity.class);
+                    Intent intent;
+                    if(imagePicker.isCropFree()){
+                        intent = new Intent(ImageGridActivity.this, FreeImageCropActivity.class);
+                    }else {
+                        intent = new Intent(ImageGridActivity.this, ImageCropActivity.class);
+                    }
                     startActivityForResult(intent, ImagePicker.REQUEST_CODE_CROP);  //单选需要裁剪，进入裁剪界面
                 } else {
                     Intent intent = new Intent();

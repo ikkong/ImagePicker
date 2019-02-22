@@ -48,6 +48,7 @@ public class ImagePicker {
     private int selectLimit = 9;         //最大选择图片数量
     private boolean crop = true;         //裁剪
     private boolean showCamera = true;   //显示相机
+    private boolean cropFree = false;         //自由裁剪,为true时 裁剪形状宽高不起作用
     private boolean isSaveRectangle = false;  //裁剪后的图片是否是矩形，否者跟随裁剪框的形状
     private int outPutX = 800;           //裁剪保存宽度
     private int outPutY = 800;           //裁剪保存高度
@@ -94,6 +95,15 @@ public class ImagePicker {
 
     public void setSelectLimit(int selectLimit) {
         this.selectLimit = selectLimit;
+    }
+
+
+    public boolean isCropFree() {
+        return cropFree;
+    }
+
+    public void setCropFree(boolean cropFree) {
+        this.cropFree = cropFree;
     }
 
     public boolean isCrop() {
