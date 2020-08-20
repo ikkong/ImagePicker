@@ -27,4 +27,5 @@ dependencies {
     compile 'com.lzy.widget:view-core:0.2.1'
 //    compile 'com.lzy.widget:imagepicker:+'
     compile project(':imagepicker')
+    compile 'pub.devrel:easypermissions:0.1.9'
 }

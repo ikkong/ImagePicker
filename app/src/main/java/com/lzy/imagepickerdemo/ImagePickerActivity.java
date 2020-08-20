@@ -1,8 +1,10 @@
 package com.lzy.imagepickerdemo;
 
+import android.Manifest;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.TypedValue;
 import android.view.View;
@@ -35,6 +37,9 @@ import com.lzy.imagepickerdemo.wxdemo.WxDemoActivity;
 import java.util.ArrayList;
 import java.util.List;
 
+import pub.devrel.easypermissions.AfterPermissionGranted;
+import pub.devrel.easypermissions.EasyPermissions;
+
 /**
  * ================================================
  * 作    者：jeasonlzy（廖子尧 Github地址：https://github.com/jeasonlzy0216
@@ -44,8 +49,42 @@ import java.util.List;
  * 修订历史：
  * ================================================
  */
-public class ImagePickerActivity extends AppCompatActivity implements SeekBar.OnSeekBarChangeListener, CompoundButton.OnCheckedChangeListener, View.OnClickListener {
+public class ImagePickerActivity extends AppCompatActivity 
+        implements SeekBar.OnSeekBarChangeListener, CompoundButton.OnCheckedChangeListener
+        , View.OnClickListener,EasyPermissions.PermissionCallbacks {
+    private String[] perms = {
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.RECORD_AUDIO,
+            Manifest.permission.CAMERA,
+            Manifest.permission.READ_EXTERNAL_STORAGE
+    };
 
+    @AfterPermissionGranted(110)
+    private void init() {
+        if (EasyPermissions.hasPermissions(this, perms)) {
+        } else {
+            EasyPermissions.requestPermissions(this, "此APP需要请求的所有权限，否则无法运行", 110, perms);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        // Forward results to EasyPermissions
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+    }
+
+    @Override
+    public void onPermissionsGranted(int requestCode, List<String> perms) {
+
+    }
+
+    @Override
+    public void onPermissionsDenied(int requestCode, List<String> perms) {
+        //init();
+    }
+    
+    
     private ImagePicker imagePicker;
 
     private RadioButton rb_uil;
@@ -69,6 +108,9 @@ public class ImagePickerActivity extends AppCompatActivity implements SeekBar.On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        
+        
         setContentView(R.layout.activity_image_picker);
 
         imagePicker = ImagePicker.getInstance();
@@ -125,6 +167,8 @@ public class ImagePickerActivity extends AppCompatActivity implements SeekBar.On
         btn_readonly.setOnClickListener(this);
 
         gridView = (GridView) findViewById(R.id.gridview);
+
+        init();
     }
 
     @Override
@@ -213,6 +257,12 @@ public class ImagePickerActivity extends AppCompatActivity implements SeekBar.On
                 gridView.setAdapter(adapter);
             } else {
                 Toast.makeText(this, "没有数据", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        if (requestCode == EasyPermissions.SETTINGS_REQ_CODE) {
+            if (!EasyPermissions.hasPermissions(this, perms)) {
+                EasyPermissions.requestPermissions(this, "此APP需要请求的所有权限，否则无法运行", 110, perms);
             }
         }
     }

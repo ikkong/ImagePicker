@@ -50,6 +50,7 @@ public class ImagePicker {
     private boolean showCamera = true;   //显示相机
     private boolean cropFree = false;         //自由裁剪,为true时 裁剪形状宽高不起作用
     private boolean isSaveRectangle = false;  //裁剪后的图片是否是矩形，否者跟随裁剪框的形状
+    private boolean multiModeCanPreview = true; //多选图片模式是否允许预览
     private int outPutX = 800;           //裁剪保存宽度
     private int outPutY = 800;           //裁剪保存高度
     private int focusWidth = 280;         //焦点框的宽度
@@ -79,6 +80,14 @@ public class ImagePicker {
             }
         }
         return mInstance;
+    }
+
+    public boolean isMultiModeCanPreview() {
+        return multiModeCanPreview;
+    }
+
+    public void setMultiModeCanPreview(boolean multiModeCanPreview) {
+        this.multiModeCanPreview = multiModeCanPreview;
     }
 
     public boolean isMultiMode() {

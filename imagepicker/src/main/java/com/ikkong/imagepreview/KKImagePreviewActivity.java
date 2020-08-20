@@ -2,6 +2,7 @@ package com.ikkong.imagepreview;
 
 import android.content.Context;
 import android.content.Intent;
+import android.media.MediaScannerConnection;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
@@ -115,6 +116,11 @@ public class KKImagePreviewActivity extends ImageBaseActivity implements View.On
                                 public void run() {
                                     Toast.makeText(KKImagePreviewActivity.this,success?
                                             ("保存成功:"+savePath):"保存失败",Toast.LENGTH_SHORT).show();
+                                    //保存成功，要刷新相册
+                                    MediaScannerConnection.scanFile(KKImagePreviewActivity.this
+                                            , new String[]{savePath}
+                                            , new String[]{"image/jpeg"},null);
+
                                 }
                             });
 

@@ -196,7 +196,7 @@ public class ImageGridActivity extends ImageBaseActivity implements ImageDataSou
     public void onImageItemClick(View view, ImageItem imageItem, int position) {
         //根据是否有相机按钮确定位置
         position = imagePicker.isShowCamera() ? position - 1 : position;
-        if (imagePicker.isMultiMode()) {
+        if (imagePicker.isMultiMode() && imagePicker.isMultiModeCanPreview()) {
             Intent intent = new Intent(ImageGridActivity.this, ImagePreviewActivity.class);
             intent.putExtra(ImagePicker.EXTRA_SELECTED_IMAGE_POSITION, position);
             intent.putExtra(ImagePicker.EXTRA_IMAGE_ITEMS, imagePicker.getCurrentImageFolderItems());
