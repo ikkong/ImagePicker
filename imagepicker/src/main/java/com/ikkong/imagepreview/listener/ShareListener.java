@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.ComponentName;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Build;
 import android.support.v4.content.FileProvider;
@@ -63,6 +64,10 @@ public class ShareListener implements View.OnLongClickListener {
                                         @Override
                                         public void run() {
                                             if(success) {
+                                                //保存成功，要刷新相册
+                                                MediaScannerConnection.scanFile(context
+                                                        , new String[]{savePath}
+                                                        , new String[]{"image/jpeg"},null);
                                                 switch (which){
                                                     case 0:
                                                         shareWeChat(savePath);

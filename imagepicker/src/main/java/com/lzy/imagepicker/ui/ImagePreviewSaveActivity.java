@@ -1,5 +1,6 @@
 package com.lzy.imagepicker.ui;
 
+import android.media.MediaScannerConnection;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
@@ -71,6 +72,10 @@ public class ImagePreviewSaveActivity extends ImagePreviewBaseActivity implement
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        //保存成功，要刷新相册
+                        MediaScannerConnection.scanFile(ImagePreviewSaveActivity.this
+                                , new String[]{savePath}
+                                , new String[]{"image/jpeg"},null);
                         Toast.makeText(ImagePreviewSaveActivity.this,success?
                                 ("保存成功:"+savePath):"保存失败",Toast.LENGTH_LONG).show();
                     }
