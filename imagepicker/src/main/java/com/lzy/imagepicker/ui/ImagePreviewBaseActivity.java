@@ -41,8 +41,9 @@ public abstract class ImagePreviewBaseActivity extends ImageBaseActivity impleme
         setContentView(R.layout.ip_activity_image_preview);
 
         mCurrentPosition = getIntent().getIntExtra(ImagePicker.EXTRA_SELECTED_IMAGE_POSITION, 0);
-        mImageItems = (ArrayList<ImageItem>) getIntent().getSerializableExtra(ImagePicker.EXTRA_IMAGE_ITEMS);
         imagePicker = ImagePicker.getInstance();
+        //mImageItems = (ArrayList<ImageItem>) getIntent().getSerializableExtra(ImagePicker.EXTRA_IMAGE_ITEMS);
+        mImageItems = imagePicker.getCurrentImageFolderItems();
         selectedImages = imagePicker.getSelectedImages();
 
         //初始化控件

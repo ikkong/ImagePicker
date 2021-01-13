@@ -199,7 +199,7 @@ public class ImageGridActivity extends ImageBaseActivity implements ImageDataSou
         if (imagePicker.isMultiMode() && imagePicker.isMultiModeCanPreview()) {
             Intent intent = new Intent(ImageGridActivity.this, ImagePreviewActivity.class);
             intent.putExtra(ImagePicker.EXTRA_SELECTED_IMAGE_POSITION, position);
-            intent.putExtra(ImagePicker.EXTRA_IMAGE_ITEMS, imagePicker.getCurrentImageFolderItems());
+            //intent.putExtra(ImagePicker.EXTRA_IMAGE_ITEMS, imagePicker.getCurrentImageFolderItems());
             intent.putExtra(ImagePreviewActivity.ISORIGIN, isOrigin);
             startActivityForResult(intent, ImagePicker.REQUEST_CODE_PREVIEW);  //如果是多选，点击图片进入预览界面
         } else {
