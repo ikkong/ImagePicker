@@ -80,7 +80,9 @@ public class ImageDataSource implements LoaderManager.LoaderCallbacks<Cursor> {
         if (data != null) {
             ArrayList<ImageItem> allImages = new ArrayList<>();   //所有图片的集合,不分文件夹
             data.moveToPosition(-1);
-            while (data.moveToNext()) {
+            int count = 0;
+            while (data.moveToNext() && count<ImagePicker.MAX_IMAGES) {
+                count++;
                 //查询数据
                 String imageName = data.getString(data.getColumnIndexOrThrow(IMAGE_PROJECTION[0]));
                 String imagePath = data.getString(data.getColumnIndexOrThrow(IMAGE_PROJECTION[1]));
@@ -133,7 +135,6 @@ public class ImageDataSource implements LoaderManager.LoaderCallbacks<Cursor> {
                 imageFolders.add(0, allImagesFolder);  //确保第一条是所有图片
             }
         }
-
         //回调接口，通知图片数据准备完成
         ImagePicker.getInstance().setImageFolders(imageFolders);
         loadedListener.onImagesLoaded(imageFolders);

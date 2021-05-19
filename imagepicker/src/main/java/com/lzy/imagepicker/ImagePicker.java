@@ -39,6 +39,7 @@ public class ImagePicker {
     public static final int REQUEST_CODE_PREVIEW = 1003;
     public static final int RESULT_CODE_ITEMS = 1004;
     public static final int RESULT_CODE_BACK = 1005;
+    public static int MAX_IMAGES = 100000;
 
     public static final String EXTRA_RESULT_ITEMS = "extra_result_items";
     public static final String EXTRA_SELECTED_IMAGE_POSITION = "selected_image_position";
